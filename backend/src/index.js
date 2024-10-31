@@ -24,18 +24,15 @@ app.use('/api/usuarios', require('../routes/rutasUsuario'));
 
 
 //servidor modulosEl
-
-const express = require("express");
-const server = express();
 const path = require("path");
+app.set("views", path.join(__dirname, "views"));
+app.use("view engine", "ejs");
+app.use(express.static("public"))
+app.use(express.urlencoded({ extended: true }));
 
-server.set("views", path.join(__dirname, "views"));
-server.set("view engine", "ejs");
-server.use(express.static("public"));
-
-server.get("/", (req, res) => {
-  res.render("index");
-});
+app.get('/', (req,res) => {
+    res.render('index');
+})
 
 app.get('/logout', (req,res) => {
     res.redirect('/login')

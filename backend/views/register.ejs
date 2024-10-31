@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de VetMed</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Crear cuenta</h2>
+        <form action="/register" method="POST">
+            <input type="text" name="nombres" id="nombres" placeholder="Nombres" autocomplete="off" value="<%= data ? data.nombres : '' %>" required>
+            <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos" autocomplete="off" value="<%= data ? data.apellidos : '' %>" required>
+            <input type="number" name="documento" id="documento" placeholder="Documento" autocomplete="off" value="<%= data ? data.documento : '' %>" required>
+            <input type="email" name="email" id="email" placeholder="Email" autocomplete="off" value="<%= data ? data.email : '' %>" required>
+            <input type="number" name="telefono" id="telefono" placeholder="Teléfono móvil" autocomplete="off" value="<%= data ? data.telefono : '' %>" required>
+            <input type="text" name="direccion" id="direccion" placeholder="Dirección" autocomplete="off" value="<%= data ? data.direccion : '' %>" required>
+            <input type="password" name="password" id="password" placeholder="Contraseña" autocomplete="off" required>
+            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirmar contraseña" autocomplete="off" required>
+            <button type="submit">CONTINUAR</button>
+        </form>
+        <p>¿Ya tienes una cuenta? <a href="/login">Iniciar sesión</a></p>
+    </div>
+
+    <script>
+        // Revisar si hay un mensaje de error desde el backend
+        const errorMessage = "<%= typeof error !== 'undefined' ? error : '' %>";
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    </script>
+    
+</body>
+</html>

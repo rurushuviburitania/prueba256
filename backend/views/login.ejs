@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetMed Iniciar sesión</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>LOGIN</h2>
+        <form action="/login" method="POST">
+            <input type="email" name="email" id="email" placeholder="Email" autocomplete="off" required>
+            <input type="password" name="password" id="password" placeholder="Contraseña" autocomplete="off" required>
+            <button type="submit">CONTINUAR</button>
+        </form>
+        <p>¿Eres nuevo en VetMed? <a href="/register">Crea tu cuenta</a></p>
+    </div>
+
+    <script>
+        // Revisar si hay un mensaje de error desde el backend
+        const errorMessage = "<%= typeof error !== 'undefined' ? error : '' %>";
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    </script>
+    
+</body>
+</html>

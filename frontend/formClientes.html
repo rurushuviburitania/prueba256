@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Formulario Clientes</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <header class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Menu</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="inicio.html">Inicio</a>
+                        <a class="nav-link" aria-current="page" href="clientes.html">Clientes</a>
+                        <a class="nav-link" href="productos.html">Productos</a>
+                        <a class="nav-link" href="inventario.html">Inventario</a>
+                        <a class="nav-link" href="pqrs.html">PQRS</a>
+                    </div>
+                
+                </div>
+            </div>
+          </nav>
+    </header>
+
+    <section class="container">
+        <div class="row align-items-center mb-4">
+            <span class="fw-bold w-auto">Formulario Clientes</span>
+        </div>
+
+        <div class="row">
+            <form class="mt-4" action="" onsubmit="" method="POST">
+
+                <div class="mt-3">
+                    <label for="nombres" class="form-label">Nombres</label>
+                    <input type="text" class="form-control" name="nombres-n" id="nombres-n">
+                </div>
+
+                <div class="mt-3">
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" name="apellidos-a" id="apellidos-a">
+                </div>
+
+                <div class="mt-3">
+                    <label for="documento" class="form-label">Documento</label>
+                    <input type="number" class="form-control" name="documento-d" id="documento-d">
+                </div>
+
+                <div class="mt-3">
+                    <label for="correo" class="form-label">Correo Electrónico</label>
+                    <input type="text" class="form-control" name="correo-c" id="correo-c">
+                </div>
+
+                <div class="mt-3">
+                    <label for="telefono" class="form-label">Teléfono </label>
+                    <input type="number" class="form-control" name="telefono-t" id="telefono-t">
+                </div>
+
+                <div class="mt-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" name="direccion-d" id="direccion-d">
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="guardarClientes()">Guardar</button>
+                <button type="button" class="btn btn-primary" id="btn-editar">Editar</button>
+
+            </form>
+        </div>
+    </section>
+
+    <script src="js/request.js"></script>
+    <script src="js/clientes.js"></script>
+    
+    <script>
+        window.onload = function(){
+        let boton = document.getElementById('btn-editar')
+        const url = new URLSearchParams(window.location.search);
+        cargarDatos(url.get('id'));
+        boton.onclick= () =>{
+            modificarClientes(url.get('id'));
+        }
+     }
+    </script>
+
+    <footer class="footer">
+        <p>© VetMed Designed by Sergio Chaux</p>
+    </footer>
+</body>
+
+</html>

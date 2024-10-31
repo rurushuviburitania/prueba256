@@ -15,7 +15,7 @@ app.use(express.json());
 
 // Configuración del motor de vistas y la ubicación de `views`
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../views')); // Asegúrate de que esta sea la ubicación correcta
+app.set('views', path.join(__dirname, '../views')); // Asegúrate de que esta sea la ruta correcta relativa a index.js
 
 // Rutas para APIs
 app.use('/api/clientes', require('../routes/rutasCliente'));

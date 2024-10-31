@@ -29,7 +29,9 @@ app.use('/api/usuarios', require('../routes/rutasUsuario'));
 app.set('views', path.join(__dirname, 'views')); 
 app.set('views', './views');
 app.set('view engine', 'ejs'); 
-
+app.use(express.static('views'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req,res) => {
     res.render('index');

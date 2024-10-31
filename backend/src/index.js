@@ -25,7 +25,6 @@ app.use('/api/usuarios', require('../routes/rutasUsuario'));
 
 //servidor modulosEl
 
-app.set('views', './views');
 app.set('view engine', 'ejs');
 app.use(express.static('views'));
 app.use(express.json());

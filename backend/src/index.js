@@ -1,105 +1,88 @@
 const express = require('express');
+const path = require('path');
 const conectarBD = require('../config/db');
-const loginCollection = require('../models/loginCollection')
+const loginCollection = require('../models/loginCollection');
 const cors = require('cors');
 
-
-//creamos nuestro servidor
+// Crear servidor
 const app = express();
-const port =  process.env.PORT || 7000;
+const port = process.env.PORT || 7000;
 
-//conexion bases de datos
+// Conectar a la base de datos
 conectarBD();
 app.use(cors());
 app.use(express.json());
 
-//ruta para consumir la api cliente
+// Configuración del motor de vistas y la ubicación de `views`
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../views')); // Asegúrate de que esta sea la ubicación correcta
+
+// Rutas para APIs
 app.use('/api/clientes', require('../routes/rutasCliente'));
 app.use('/api/productos', require('../routes/rutasProducto'));
 app.use('/api/usuarios', require('../routes/rutasUsuario'));
 
-
-
-//ruta para verificar el servidor
-
-
-//servidor modulosEl
-
-app.set('view engine', 'ejs');
-
-app.use(express.json());
+// Middleware para decodificar URL y JSON
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req,res) => {
-    res.render(__dirname + '/views/index.ejs');
-})
+// Rutas
+app.get('/', (req, res) => {
+    res.render('index'); // Renderiza index.ejs desde la carpeta `views`
+});
 
-app.get('/logout', (req,res) => {
-    res.redirect('/login')
-})
+app.get('/logout', (req, res) => {
+    res.redirect('/login');
+});
 
-app.get('/login', (req,res) => {
-    res.render('login.ejs')
-})
+app.get('/login', (req, res) => {
+    res.render('login');
+});
 
 app.get('/register', (req, res) => {
-    res.render('register.ejs', { error: '', data: {} });
-})
+    res.render('register', { error: '', data: {} });
+});
 
 app.post('/register', async (req, res) => {
     const { nombres, apellidos, documento, email, telefono, direccion, password, confirmPassword } = req.body;
 
-    // Verificar si las contraseñas coinciden
     if (password !== confirmPassword) {
-        return res.status(400).render('register.ejs', { error: 'Passwords do not match', data: {nombres, apellidos, documento, telefono, direccion, email} });
+        return res.status(400).render('register', { error: 'Passwords do not match', data: req.body });
     }
 
     try {
-        // Verificar si el email ya está registrado
         const existingUser = await loginCollection.findOne({ email });
-
         if (existingUser) {
-            return res.status(400).render('register.ejs', { error: 'Email already registered', data: { nombres, apellidos, documento, telefono, direccion } });
+            return res.status(400).render('register', { error: 'Email already registered', data: req.body });
         }
 
-        // Crear y guardar el nuevo usuario
-        const newUser = new loginCollection({ nombres, apellidos, documento, email, telefono, direccion, password });
+        const newUser = new loginCollection(req.body);
         await newUser.save();
         res.redirect('/login');
     } catch (error) {
-        res.status(500).render('register.ejs', { error: 'Server error, Try again.', data: { nombres, apellidos, documento, telefono, direccion } });
+        res.status(500).render('register', { error: 'Server error. Try again.', data: req.body });
     }
-})
+});
 
-
-
-app.post('/login', async (req,res) => {
+app.post('/login', async (req, res) => {
     try {
-        const path = require('path');
-        app.use(express.static(path.join(__dirname, '../../frontend')));
-        const {email, password} = req.body;
+        const { email, password } = req.body;
+        const user = await loginCollection.findOne({ email });
 
-        const user = await loginCollection.findOne({email: email})
-
-        if(!user) {
-            return res.status(400).render('login.ejs',{error: 'Incorrect email or password', data: { email } })
+        if (!user) {
+            return res.status(400).render('login', { error: 'Incorrect email or password', data: { email } });
         }
 
         if (user.password !== password) {
-            return res.status(400).render('login.ejs',{error: 'Incorrect password'})
+            return res.status(400).render('login', { error: 'Incorrect password' });
         }
 
-        
-        res.render('index.ejs', { nombres: user.nombres });
+        res.render('index', { nombres: user.nombres });
     } catch (error) {
-        res.status(500).render('login.ejs',{error: 'An error occurred. Please try again.'})
+        res.status(500).render('login', { error: 'An error occurred. Please try again.' });
     }
-})
+});
 
-
-
-
-//ruta de nuestro servidor local
-app.listen(port,() =>{
-    console.log('El servidor esta conectado http://localhost:5000');
-})
+// Iniciar el servidor
+app.listen(port, () => {
+    console.log(`El servidor está conectado en http://localhost:${port}`);
+});

@@ -76,7 +76,7 @@ app.post('/login', async (req, res) => {
             return res.status(400).render('login', { error: 'Incorrect password' });
         }
 
-        res.render('index', { nombres: user.nombres });
+        res.render('init', { nombres: user.nombres });
     } catch (error) {
         res.status(500).render('login', { error: 'An error occurred. Please try again.' });
     }

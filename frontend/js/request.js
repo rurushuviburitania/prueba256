@@ -10,4 +10,3 @@ function sendRequest(endPoint, method, data){
     return request
 }
 
-

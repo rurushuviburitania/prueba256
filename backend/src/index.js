@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rutas
 app.get('/', (req, res) => {
-    res.render('index'); // Renderiza index.ejs desde la carpeta `views`
+    res.render('init'); // Renderiza index.ejs desde la carpeta `views`
 });
 
 app.get('/logout', (req, res) => {

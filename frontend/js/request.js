@@ -1,5 +1,5 @@
 //const url = 'http://localhost:5000/api/';
-const url = 'https://proyecto256.onrender.com/';
+const url = 'https://prueba256.onrender.com';
 
 function sendRequest(endPoint, method, data){
     let request = new XMLHttpRequest();
